@@ -4,10 +4,6 @@ import pygame
 import time
 
 
-class GameOverException(BaseException):
-    pass
-
-
 class SnakeChain:
     def __init__(self, x, y, direction):
         self.position_x = x
@@ -118,7 +114,7 @@ class Snake(player.Player):
                 next_position_symbol = self.game.get_symbol_at_index(next_position_index_x, next_position_index_y)
 
                 if next_position_symbol == "W" or next_position_symbol == "B":
-                    raise GameOverException()
+                    raise my_game.GameOverException()
                 elif next_position_symbol == "R":
 
                     rabbit = self.game.get_player_at(next_position_index_x, next_position_index_y)

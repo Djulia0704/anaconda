@@ -7,6 +7,14 @@ import snake
 GAME_FIELD_MIN_DIM = 50
 
 
+class GameOverException(BaseException):
+    pass
+
+
+class LevelDoneException(BaseException):
+    pass
+
+
 class Game:
     def _parse_game_map(self, game_map_path) -> list:
         result = []
@@ -55,7 +63,12 @@ class Game:
 
             pygame.display.flip()
 
-            # TODO підраховувати кроликів і якщо всі з'їдені переходимо на наступний рівень
+            rabbits_count = 0
+            for player in self.players:
+                if isinstance(player, rabbit.Rabbit):
+                    rabbits_count += 1
+            if rabbits_count == 0:
+                raise LevelDoneException()
 
     def get_screen(self):
         return self.screen

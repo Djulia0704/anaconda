@@ -16,7 +16,7 @@ class Rabbit(player.Player):
     def get_possible_moves(self):
         candidates = [(-1, -1), (0, -1), (1, -1),
                       (-1, 0),            (1, 0),
-                      (-1, -1), (0, -1), (1, -1)]
+                      (-1, 1),  (0, 1),   (1, 1)]
 
         def check_candidate(candidate_) -> bool:
             return "_" == self.game.get_symbol_at_index(self.position_x + candidate_[0],

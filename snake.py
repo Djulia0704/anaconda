@@ -47,7 +47,7 @@ class Snake(player.Player):
 
     def check_direction(self):
         for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
+            if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP:
                 if event.key == pygame.K_RIGHT and self.direction != "L":
                     self.direction = "R"
                 if event.key == pygame.K_LEFT and self.direction != "R":

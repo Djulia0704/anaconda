@@ -48,13 +48,13 @@ class Snake(player.Player):
     def check_direction(self):
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RIGHT:
+                if event.key == pygame.K_RIGHT and self.direction != "L":
                     self.direction = "R"
-                if event.key == pygame.K_LEFT:
+                if event.key == pygame.K_LEFT and self.direction != "R":
                     self.direction = "L"
-                if event.key == pygame.K_UP:
+                if event.key == pygame.K_UP and self.direction != "D":
                     self.direction = "U"
-                elif event.key == pygame.K_DOWN:
+                elif event.key == pygame.K_DOWN and self.direction != "U":
                     self.direction = "D"
 
     def get_next_position(self):
@@ -104,16 +104,14 @@ class Snake(player.Player):
 
                 self.time = time_now
 
-                _next = self.head
-                while _next:
-                    self.game.set_symbol_at_index(_next.position_x, _next.position_y, "_")
-                    _next = _next.next
-
                 next_position_index_x, next_position_index_y = self.get_next_position()
 
                 next_position_symbol = self.game.get_symbol_at_index(next_position_index_x, next_position_index_y)
 
-                if next_position_symbol == "W" or next_position_symbol == "B":
+                if next_position_symbol == "W":
+                    raise my_game.GameOverException()
+                elif next_position_symbol == "B" and \
+                        self.tail != self.game.get_player_at(next_position_index_x, next_position_index_y):
                     raise my_game.GameOverException()
                 elif next_position_symbol == "R":
 
@@ -127,6 +125,11 @@ class Snake(player.Player):
                     self.head.direction = self.direction
 
                 else:
+
+                    _next = self.head
+                    while _next:
+                        self.game.set_symbol_at_index(_next.position_x, _next.position_y, "_")
+                        _next = _next.next
 
                     prev = self.tail
                     while prev:
